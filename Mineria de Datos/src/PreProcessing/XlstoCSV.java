@@ -148,6 +148,7 @@ class XlStoCSV {
 
                 // Iterate through each rows from first sheet
                 Iterator<Row> rowIterator = sheet.iterator();
+                //row = rowIterator.next(); //obviamos la primera linea
                 while (rowIterator.hasNext()) {
                     row = rowIterator.next();
                     // For each row, iterate through each columns
@@ -155,30 +156,32 @@ class XlStoCSV {
                     int columnNumber = 1;
                     while (cellIterator.hasNext()) {
                         cell = cellIterator.next();
-                        if (columnNumber > 1)
-                        {
-                            data.append(",");
-                        }
-
-                        switch (cell.getCellType()) {
-                        case Cell.CELL_TYPE_BOOLEAN:
-                            data.append(cell.getBooleanCellValue());
-                            break;
-
-                        case Cell.CELL_TYPE_NUMERIC:
-                            data.append(cell.getNumericCellValue() );
-                            break;
-
-                        case Cell.CELL_TYPE_STRING:
-                            data.append(cell.getStringCellValue());
-                            break;
-
-                        case Cell.CELL_TYPE_BLANK:
-                            data.append("");
-                            break;
-
-                        default:
-                            data.append(cell);
+                        if ((columnNumber == 1)||(columnNumber == 4)||(columnNumber > 9)) {
+	                        switch (cell.getCellType()) {
+	                        case Cell.CELL_TYPE_BOOLEAN:
+	                            data.append(cell.getBooleanCellValue());
+	                            data.append(",");
+	                            break;
+	
+	                        case Cell.CELL_TYPE_NUMERIC:
+	                            data.append(cell.getNumericCellValue() );
+	                            data.append(",");
+	                            break;
+	
+	                        case Cell.CELL_TYPE_STRING:
+	                            data.append(cell.getStringCellValue());
+	                            data.append(",");
+	                            break;
+	
+	                        case Cell.CELL_TYPE_BLANK:
+	                            data.append("");
+	                            data.append(",");
+	                            break;
+	
+	                        default:
+	                            data.append(cell);
+	                            data.append(",");
+	                        }
                         }
                          ++columnNumber;
                     }
@@ -198,6 +201,7 @@ class XlStoCSV {
                 fos.write(data.toString().getBytes());
                 fos.close();
                 count++;
+                
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
