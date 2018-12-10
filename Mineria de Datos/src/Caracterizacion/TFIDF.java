@@ -9,6 +9,7 @@ import weka.core.converters.ConverterUtils;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Reorder;
 import weka.filters.unsupervised.attribute.StringToWordVector;
+import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 public class TFIDF {
 
@@ -23,32 +24,9 @@ public class TFIDF {
 
 	public static void main(String[] args) throws Exception {
 
-		if (args.length == 0) {
-			System.out.println("=====fssTFIDF=====");
-			System.out.println(
-					"Este programa tiene como función transformar el espacio de atributos del conjunto de entrenamiento a TFIDF ");
-			System.out.println("Este programa necesita que introduzcas 2 argumentos para funcionar correctamente.");
-			System.out.println(
-					"PRECONDICIONES:\nEl primer argumento será el path del conjunto de entrenamiento a transformar. "
-							+ "El segundo es el path destino. ");
-			System.out.println(
-					"POSTCONDICIONES:\nEl resultado de esta aplicación será una representación TFIDF del espacio de atributos del conjunto de entrenamiento.\n");
-			System.out.println("Lista de argumentos:\n-Path del conjunto de entrenamiento a transformar.\n"
-					+ "-Path de salida.\n");
-			System.out.println(
-					"Ejemplo de una correcta ejecución: java -jar fssTFIDF.jar /path/to/train.arff /path/to/trainTFIDF.arff");
-			System.exit(0);
-		} else {
-			String pathIn = "";
-			String pathOut = "";
-
-			if (args.length == 2) {
-				pathIn = args[0];
-				pathOut = args[1];
-			} else {
-				printlnError("Error en el input. Revise su sintaxis.");
-				System.exit(1);
-			}
+			String pathIn = "C:/tmp/Autopsias_limpias.arff";
+			String pathOut = "C:/tmp/Autopsias_Tfidf.arff";
+		
 			Instances data = loadArff(pathIn, -1);
 			data.setClassIndex(data.numAttributes() - 1);
 			StringToWordVector filter;
@@ -61,13 +39,13 @@ public class TFIDF {
 			filter.setTFTransform(true);
 			filter.setIDFTransform(true);
 			filter.setOutputWordCounts(true);
-			// filter.setLowerCaseTokens(true);
+			filter.setLowerCaseTokens(true);
 			filter.setInputFormat(data);
 			dataFiltered = Filter.useFilter(data, filter);
 			// SI ELEGIMOS NON-SPARSE
-			// SparseToNonSparse sparseFilter = new SparseToNonSparse();
-			// sparseFilter.setInputFormat(dataFiltered);
-			// dataFiltered = Filter.useFilter(dataFiltered, sparseFilter);
+			 SparseToNonSparse sparseFilter = new SparseToNonSparse();
+			 sparseFilter.setInputFormat(dataFiltered);
+			 dataFiltered = Filter.useFilter(dataFiltered, sparseFilter);
 			/*
 			 * Hacemos que la clase sea el último atributo
 			 */
@@ -76,6 +54,7 @@ public class TFIDF {
 			reorderFilter.setOptions(new String[] { "-R", "2-last,1" });
 			dataFiltered = Filter.useFilter(dataFiltered, reorderFilter);
 			dataFiltered.setClassIndex(dataFiltered.numAttributes() - 1);
+			System.out.println(dataFiltered.classIndex());
 			/*
 			 * Damos a la relación su nombre original
 			 */
@@ -84,7 +63,7 @@ public class TFIDF {
 			 * guardamos los datos en el path especificado
 			 */
 			saveArff(dataFiltered, pathOut);
-		}
+		
 	}
 
 	/**

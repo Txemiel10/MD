@@ -18,6 +18,10 @@ import weka.filters.supervised.attribute.AttributeSelection;
 public class One_R {
 		private Instances DatosFiltrados;
 		
+		public One_R(Instances Inst){
+			DatosFiltrados = Inst;
+		}
+		
 	public OneR InstanciadoOneR(Instances DatosEntrenamiento) throws Throwable {
 		OneR oneR = new OneR();
 		oneR.buildClassifier(DatosEntrenamiento);
@@ -25,7 +29,11 @@ public class One_R {
 	}
 	
 	public void EvaluarDatos(OneR oneR, Instances DatosTest) throws Throwable{
-		Evaluation evaluator1 = new Evaluation(DatosFiltrados);
-		evaluator1.evaluateModel(oneR, DatosTest);
+		Evaluation eval = new Evaluation(DatosFiltrados);
+		eval.evaluateModel(oneR, DatosTest);
+	}
+	
+	public void MostrarDatos(Evaluation eval){
+		eval.predictions();
 	}
 }
