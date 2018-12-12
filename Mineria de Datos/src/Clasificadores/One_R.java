@@ -22,16 +22,19 @@ public class One_R {
 		
 		public void ejecutar(Instances datos,String F,String OPath) throws Exception{
 			
-			if(F=="Si"){
+			//if(F=="Si"){
+			System.out.println("Aplicando InfoGain");
 				AttributeSelection filtro = new AttributeSelection();
 				InfoGainAttributeEval eval = new InfoGainAttributeEval();
 				Ranker search = new Ranker();
+				search.setNumToSelect(110);
 				filtro.setEvaluator(eval);
 				filtro.setSearch(search);
 				filtro.setInputFormat(datos);
 				Instances DatosFiltrados = Filter.useFilter(datos, filtro);
 				datos=DatosFiltrados;
-				}
+				System.out.println("Aplicado Infogain");
+				//}
 			
 			OneR oneR = new OneR();
 			oneR.buildClassifier(datos);

@@ -44,10 +44,10 @@ public class Runable {
 	 */
 	public static void main(String[] args) throws Throwable {
  
-	String DPath = args[0];
-	String OPath = args[1];
-	String Classif = args[2];
-	String Filtro = args[3];
+	String DPath = "C:/tmp/Autopsias_Tfidf2.arff";//args[0];
+	String OPath = "C:/tmp/Res.arff";//args[1];
+	String Classif = "OneR";//args[2];
+	String Filtro = "Si";//args[3];
 	Instances datos = null;
 	try {
 		DataSource source = new DataSource(DPath);
@@ -62,11 +62,11 @@ public class Runable {
 	
 		if(Classif == "rf"){
 		RandForest rf = new RandForest();
-		rf.ejecutar(datos,Filtro, OPath);
+		rf.ejecutar(datos,Filtro,OPath);
 		}
 		else{
 		One_R or = new One_R();
-		or.ejecutar(datos,Filtro, OPath);
+		or.ejecutar(datos,Filtro,OPath);
 		}
 	}
 }
