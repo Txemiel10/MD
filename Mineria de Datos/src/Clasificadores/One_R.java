@@ -38,7 +38,6 @@ public class One_R {
 			
 			OneR oneR = new OneR();
 			oneR.buildClassifier(datos);
-			System.out.println(oneR.toString());
 			Evaluation evaluatorkFold = new Evaluation(datos);
 			evaluatorkFold.crossValidateModel(oneR, datos, 10 , new Random(10));
 			StringBuilder resultado = new StringBuilder();
