@@ -47,6 +47,7 @@ public class Runable {
 	String DPath = args[0];
 	String OPath = args[1];
 	String Classif = args[2];
+	String Filtro = args[3];
 	Instances datos = null;
 	try {
 		DataSource source = new DataSource(DPath);
@@ -61,11 +62,11 @@ public class Runable {
 	
 		if(Classif == "rf"){
 		RandForest rf = new RandForest();
-		rf.ejecutar(datos, OPath);
+		rf.ejecutar(datos,Filtro, OPath);
 		}
 		else{
 		One_R or = new One_R();
-		or.ejecutar(datos, OPath);
+		or.ejecutar(datos,Filtro, OPath);
 		}
 	}
 }
