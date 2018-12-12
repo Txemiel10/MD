@@ -25,7 +25,7 @@ public class TFIDF {
 	public static void main(String[] args) throws Exception {
 
 			String pathIn = "C:/tmp/Autopsias_limpias.arff";
-			String pathOut = "C:/tmp/Autopsias_Tfidf.arff";
+			String pathOut = "C:/tmp/Autopsias_Tfidf4.arff";
 		
 			Instances data = loadArff(pathIn, -1);
 			data.setClassIndex(data.numAttributes() - 1);
