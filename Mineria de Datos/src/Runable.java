@@ -37,7 +37,10 @@ public class Runable {
 	 *             /some/where/breast-cancer.arff
 	 * @param      args[1] path donde guardar los resultados -> ej:
 	 *             /some/where/results.txt
-	 * @param      args[2]
+	 * @param      args[2] Clasificador a utilizar:
+	 * 			   'rf'-> RandomForest , 'OneR' (o cualquier cosa) -> One Rule
+	 * @param	   args[3] Datos Filtrados si o no -> ej:
+	 * 			   'Si' o 'No'
 	 * @throws Throwable
 	 * 
 	 * 
@@ -46,7 +49,7 @@ public class Runable {
 
 		if (args.length == 0) {
 			System.out.println("=====Main=====");
-			System.out.println("Este programa tiene como función obtener un fichero el cual tiene los resultados"
+			System.out.println("Este programa tiene como función obtener un fichero el cual tiene los resultados "
 					+ "de la aplicación del clasificador seleccionado sobre los datos de Autopsias ");
 			System.out.println("Este programa necesita que introduzcas 4 argumentos para funcionar correctamente.");
 			System.out.println("PRECONDICIONES:\nEl primer argumento será el path del fichero a convertir/n"
@@ -70,10 +73,10 @@ public class Runable {
 			System.exit(1);
 		} else {
 
-			String DPath = "C:/tmp/Autopsias_GrandeTfidfs.arff";// args[0];
-			String OPath = "C:/tmp/Res.arff";// args[1];
-			String Classif = "rf";// args[2];
-			String Filtro = "Si";// args[3];
+			String DPath = args[0]; // ej "C:/tmp/Autopsias_GrandeTfidfs.arff"
+			String OPath =  args[1]; // ej "C:/tmp/Res.arff";
+			String Classif =  args[2];// ej "rf";
+			String Filtro = args[3]; // ej  "Si";
 			Instances datos = null;
 			try {
 				DataSource source = new DataSource(DPath);
